@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+{% endblock %}
+
+{% block app_content %}
+    <div class="row">
+
+        <div class="col-lg-6">
+            <h2>{{ title }}</h2></div>
+        <div class="col-lg-2" style="margin-top: 10px;">
+            {% if g2 %}
+                <a style="float:right;" class="btn btn-primary" href="{{ g2 }}"><i class="fas fa-cogs"></i>
+                    &nbsp;Gerar {{ label }} Sem DAF
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-lg-2" style="margin-top: 10px;">
+            {% if gerar %}
+                <a style="float:right;" class="btn btn-primary" href="{{ gerar }}"><i class="fas fa-cogs"></i>
+                    &nbsp;Gerar {{ label }}
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-lg-2" style="margin-top: 10px;">
+            {% if add %}
+                <a style="float:right;" class="btn btn-primary" href="{{ add }}"><i class="fas fa-plus"></i> &nbsp;Cadastrar {{ label }}
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-12">
+            <table
+                    id="table"
+                    data-toggle="true"
+                    data-toolbar="#toolbar"
+                    data-search="true"
+                    data-show-columns="true"
+                    data-pagination="true"
+                    data-height="500">
+            </table>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="janelaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width:60%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modalLabel"></h4>
+                </div>
+                <div class="modal-footer" style="width: 90%; margin: 0 auto; position: relative;">
+                    <button type="button" data-dismiss="modal" style="float: left" class="btn">Não, cancelar</button>
+                    <button type="button" data-dismiss="modal" style="float: right" class="btn btn-danger" id="delete">
+                        Sim, excluir
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script type='text/javascript'
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <script type='text/javascript'
+            src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table-locale-all.min.js"></script>
+    <script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>
+    <script type="text/javascript" src="http://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+    <script type='text/javascript'>
+        $(window).load(function () {
+            var data = {{data|tojson}};
+            var columns = {{columns|tojson}};
+            $(function () {
+                $('#table').bootstrapTable({
+                    data: data,
+                    columns: columns,
+                    locale: "pt-BR"
+                });
+            });
+        });
+    </script>
+    <script type='text/javascript'>
+        $(window).load(function () {
+
+            $(".del").click(function () {
+                console.log("teste");
+                let rota = $(this).attr("rota");
+                let codigo = $(this).attr("codigo");
+            });
+
+            $('#janelaModal').on('show.bs.modal', function (e) {
+                let codigo = $(e.relatedTarget).attr("codigo");
+                let label = $(e.relatedTarget).attr("label");
+                let rota = $(e.relatedTarget).attr("rota");
+                $("#modalLabel").text("Tem certeza que deseja excluir o {{ label }} " + codigo + "?", 'Confirmação');
+                $("#delete").click(function () {
+                    window.location.href = rota;
+                });
+            })
+
+            $(".rem").click(function () {
+                let rota = $(this).attr("rota");
+                let codigo = $(this).attr("codigo");
+                eModal.confirm("Tem certeza que deseja remover o registo do {{ label }} " + codigo + "?", 'Confirmação').then(function () {
+                    window.location.href = rota;
+                }, function () {
+                });
+            });
+
+            $(".reset").click(function () {
+                let rota = $(this).attr("rota");
+                let codigo = $(this).attr("codigo");
+                eModal.confirm("Tem certeza que deseja restaurar os padrões de fábrica do {{ label }} " + codigo + "? Esta operação é irreversível e pode provocar inconsistências.", 'Confirmação').then(function () {
+                    window.location.href = rota;
+                }, function () {
+                });
+            });
+        });
+    </script>
+
+{% endblock %}

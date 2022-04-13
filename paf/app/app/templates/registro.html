@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+    <style type="text/css">
+        div.radio {
+            display: inline-block;
+            padding-right: 50px;
+        }
+
+        label {
+            display: block
+        }
+    </style>
+{% endblock %}
+
+{% block app_content %}
+    <script>
+        var selects = [];
+        var radios = [];
+    </script>
+    <h1>{{ form_title }}</h1>
+    <form action={{ action }} method="post" class="form" role="form">
+        <div class="row">
+            {% for c in columns %}
+                {% if  c.field != "ops" %}
+
+                    {% if form[c.field] %}
+                        <div class="form-group col-md-6">
+                            {% if form[c.field]['type'] == "RadioField" %}
+                                {{ form[c.field]['label'] }}
+                                <script>radios.push({
+                                    "id": "{{c.field}}",
+                                    "val": "{{dados[c.field] | string}}"
+                                }) </script>
+                            {% endif %}
+                            {{ wtf.form_field(form[c.field], type=c.type, class='form-control '+c.class, placeholder=c.title, value=dados[c.field]) }}
+                            {% if c.type == 'fk' %}
+                                <script>selects.push({
+                                    "id": "{{c.field}}",
+                                    "val": "{{dados[c.sec_value] | string}}"
+                                })</script>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12 text-center">
+                <button type="submit" class="btn btn-primary">Gravar</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="http://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#datepick').datepicker();
+        });
+        $(document).ready(function () {
+            $('.date').mask('11/11/1111');
+            $('.time').mask('00:00:00');
+            $('.date_time').mask('99/99/9999 00:00:00');
+            $('.cep').mask('99999-999');
+            $('.phone').mask('(99) 99999-9999');
+            $('.mixed').mask('AAA 000-S0S');
+            $('.cpf').mask('000.000.000-00', {reverse: true});
+            $('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+            $('.money').mask('000.000.000.000.000,00', {reverse: true});
+            $('.sem_espaco').mask("A", {
+                translation: {
+                    "A": {pattern: /[\w@\-.+]/, recursive: true}
+                }
+            });
+            for (var r in radios) {
+                b = radios[r];
+                for (var i = 0; i < $("[name=" + b["id"] + "]").length; i++)
+                    if ($("#" + b["id"] + "-" + i).val() == b["val"])
+                        $("#" + b["id"] + "-" + i).attr('checked', 'checked');
+            }
+            for (var r in selects) {
+                b = selects[r];
+                $("#" + b["id"]).val(b["val"]);
+            }
+        });
+    </script>
+{% endblock %}

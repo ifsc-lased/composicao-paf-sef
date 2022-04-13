@@ -1,0 +1,112 @@
+{% extends 'bootstrap/base.html' %}
+{% block head %}
+    {{ super() }}
+    <link href="/static/danfe.css" rel="stylesheet">
+    {{ fontawesome_html() }}
+{% endblock %}
+
+{%- macro duplicated(via) -%}
+    <div class="container {% if nota.tpambi == "2" %}sem_valor{% endif %}">
+        <div id="topo" style="margin-bottom: 8px">
+            <div class="col-sm-2" id="logo-nfce">
+                <img src="/static/nfce.png"/>
+            </div>
+            <div class="col-sm-10">
+                <div class="col-sm-12">CNPJ: {{ empresa.cnpj }} <b>{{ empresa.nome }}</b></div>
+                <div class="col-sm-12">{{ empresa.end }}</div>
+                <div class="col-sm-12">Documento Auxiliar da Nota Fiscal de Consumidor Eletrônica</div>
+            </div>
+            {% if nota.tpemis == "9" %}
+                <div id="faixa" class="col-sm-12">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6" id="texto_fisco">
+                        <div class="col-sm-12 text-center" style="font-size: 16px">EMITIDA EM CONTINGÊNCIA</div>
+                        <div class="col-sm-12 text-center">Pendente de autorização</div>
+                    </div>
+                    <div class="col-sm-3"></div>
+                </div>
+            {% endif %}
+        </div>
+        <div id="main" style="margin: 5px;">
+            <table style="margin-bottom: 8px;">
+                <tr>
+                    <th style="width: 12%">Código</th>
+                    <th>Descrição</th>
+                    <th style="width: 5%" class="text-right">Qtde</th>
+                    <th style="width: 7%" class="text-center">UN</th>
+                    <th style="width: 15%" class="text-right">Vl Unit</th>
+                    <th style="width: 15%" class="text-right">Vl Total</th>
+                </tr>
+                {% for i in itens %}
+                    <tr>
+                        <td class="text-left">{{ i.cod }}</td>
+                        <td>{{ i.nome }}</td>
+                        <td class="text-right">{{ i.qnt }}</td>
+                        <td class="text-center">{{ i.un }}</td>
+                        <td class="text-right">{{ i.vu }}</td>
+                        <td class="text-right">{{ i.vt }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <div class="col-sm-8">Qtde. total de itens</div>
+            <div class="col-sm-4 text-right">{{ venda.qnt_itens }}</div>
+
+            <div class="col-sm-8">Valor total R$</div>
+            <div class="col-sm-4 text-right">{{ venda.valor_total }}</div>
+
+            <div class="col-sm-8">Desconto R$</div>
+            <div class="col-sm-4 text-right">{{ venda.desconto }}</div>
+
+            <div class="col-sm-8">Frete R$</div>
+            <div class="col-sm-4 text-right">{{ venda.frete }}</div>
+
+            <div class="col-sm-8"><b>Valor a Pagar R$</b></div>
+            <div class="col-sm-4 text-right" style="margin-bottom: 8px"><b>{{ venda.valor_pago }}</b></div>
+
+            <div class="col-sm-8">FORMA DE PAGAMENTO</div>
+            <div class="col-sm-4 text-right">VALOR PAGO R$</div>
+
+            <div class="col-sm-8">Dinheiro</div>
+            <div class="col-sm-4 text-right">{{ venda.valor_pago }}</div>
+
+            <div class="col-sm-8" style="margin-top: 5px;">Troco</div>
+            <div class="col-sm-4 text-right" style="margin-top: 5px; margin-bottom: 5px;">0,00</div>
+
+            <div class="col-sm-12 text-center"><b>Consulte pela Chave de Acesso em</b></div>
+            <div class="col-sm-12 text-center">{{ endereco_qrcode }}</div>
+
+            <div class="col-sm-12 text-center">{{ nota.chave }}</div>
+
+            <div class="col-sm-12" style="margin-top: 8px;">
+                <div class="col-sm-4" style="padding: 12px 12px 0px 12px;">
+                    <img src="{{ qrcode(url_qrcode) }}" style="max-width: 100%; padding: 5px 20px 10px 10px;">
+                </div>
+                <div class="col-sm-8">
+                    <div class="col-sm-12" style="margin-bottom: 6px;"><b>CONSUMIDOR</b> - CPF {{ cliente.cpf }}
+                        - {{ cliente.nome }}
+                        - {{ cliente.endereco }}</div>
+                    <div class="col-sm-12"><b>NFC-e n° {{ nota.nf }} Série {{ nota.serie }} {{ nota.dh_emi }}</b></div>
+                    <div class="col-sm-12" style="margin-bottom: 6px;">{% if nota.tpemis == "9" %}
+                        <b>Via {{ via }}</b>{% endif %}</div>
+
+                    <div class="col-sm-12">{% if nota.protocolo %}<b>Protocolo de autorização:</b>
+                        {{ nota.protocolo }}{% endif %}</div>
+                    <div class="col-sm-12">{% if nota.data_aut %}<b>Data de autorização:</b>
+                        {{ nota.data_aut }}{% endif %}</div>
+                </div>
+                <div class="col-sm-8 infad" style="margin-top: 5px;">
+                    <div class="col-sm-12"><b>Autorização DAF</b><br/>{{ nota.ad_fisco }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center" style="font-size: 11px; margin-top: 5px;">Tributos Totais Incidentes (Lei
+            Federal 12.741/2012):
+            R$ {{ venda.tributos }}</div>
+    </div>
+{%- endmacro -%}
+{% block content %}
+    {{ duplicated("consumidor") }}
+    {% if nota.tpemis == "9" %}
+        {{ duplicated("empresa") }}
+    {% endif %}
+{% endblock %}

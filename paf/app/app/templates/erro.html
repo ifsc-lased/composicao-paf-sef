@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block app_content %}
+    <h1>{{ titulo }}</h1>
+    <br/>
+    <br/>
+    <div class="container-fluid text-center">
+        <a class="btn btn-info btn-lg" href="javascript:history.back()"><i class="fas fa-arrow-circle-left"></i> Voltar
+            para página anterior</a>
+    </div>
+    {% if e %}
+        <h4>Descrição do erro:</h4>
+        <div class="text-justify">{{ e }}</div>
+    {% endif %}
+{% endblock %}

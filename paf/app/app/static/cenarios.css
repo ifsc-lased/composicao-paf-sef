@@ -1,0 +1,325 @@
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.fa-clock {
+    color: #aaa;
+}
+
+.fa-info-circle {
+    cursor: help;
+    font-size: 13px;
+    padding: 2px;
+}
+
+.bg-light {
+    background-color: #f9f9f9;
+}
+
+#passos li {
+    list-style: none;
+    font-size: 18px;
+    /*margin: 8px 0px 8px 0px;*/
+    border-radius: 5px;
+    /*border: 1px solid #c9c9c9;*/
+    padding: 3px;
+    border-width: 1px 1px 0px 1px;
+    border-color: #ddd;
+    border-style: solid;
+}
+
+#passos li.par {
+    background: rgb(249, 249, 249);
+}
+
+#titulos span {
+    font-style: normal;
+    text-align: center !important;
+    font-weight: bold;
+    font-size: 16px !important;
+    text-transform: initial !important;
+}
+
+#passos li .ator {
+    text-transform: uppercase;
+    width: 65px;
+    display: inline-block;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#passos li .ator img {
+    width: 45px;
+}
+
+#passos li.daf {
+    /*background: rgba(250, 206, 206, 0.4);*/
+}
+
+#passos li.sef {
+    /*background: rgba(206, 250, 227, 0.4);*/
+}
+
+#passos li.paf {
+    /*background: rgba(206, 224, 250, 0.4);*/
+}
+
+#passos li.sefaz {
+    /*background: rgba(250, 234, 206, 0.4);*/
+}
+
+
+#passos li .icone {
+    color: rgba(67, 106, 67, 0.9);
+    padding-right: 5px;
+    display: inline-block;
+    width: 25px !important;
+}
+
+#passos li .time {
+    display: inline-block;
+    width: 110px;
+}
+
+#passos li .descricao {
+    display: inline-block;
+    min-width: 550px;
+}
+
+#passos table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    width: 100%;
+    display: none;
+}
+
+#passos table tr {
+    background: #f3f3f3;
+}
+
+#passos table tr td {
+    padding: 5px;
+}
+
+#passos table tr td.upi, #passos table tr td.downi {
+    width: 1%;
+}
+
+#passos table tr td .up, #passos table tr td .down {
+    display: block;
+    width: 535px;
+    max-height: 200px;
+    overflow-wrap: break-word;
+    overflow-scrolling: touch;
+}
+
+#carregando {
+    width: 18px;
+}
+
+.mostrar {
+    float: right;
+    cursor: pointer;
+    display: inline-block;
+    width: 25px;
+}
+
+.resultado {
+    font-style: italic;
+    display: inline-block;
+    min-width: 450px;
+}
+
+.passo_icone {
+    padding: 10px;
+}
+
+#fim .resultado {
+    width: 675px;
+}
+
+.btn-default.disabled {
+    background-color: #eee;
+}
+
+.col-setas {
+    margin-top: 25px;
+}
+
+.seta {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    margin-top: 30px;
+    transform: rotate(0deg);
+}
+
+.seta span {
+    width: 80px;
+    height: 0px;
+    /*background-color: #666;*/
+    border: 1px dashed #666;
+    position: relative;
+    margin-left: 10px;
+}
+
+.seta span:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: relative;
+    display: flex;
+    /* margin-left: 50px;*/
+    float: right;
+    bottom: 5px;
+    left: 5px;
+    background-image: url("../static/seta.png");
+    background-size: 9px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.seta.seta-middle {
+    transform: rotate(0deg);
+}
+
+.seta.seta-middle span {
+    margin-left: 18px;
+    width: 80px;
+}
+
+.timeline {
+    overflow-x: scroll;
+    margin-top: 50px;
+    height: 310px;
+    padding-left: 5px;
+    white-space: nowrap;
+}
+
+.nivel {
+    border-right: 1px solid #efefef;
+    display: inline-block;
+    white-space: normal;
+}
+
+.nivel .col-setas {
+    float: left;
+}
+
+.nivel .col-botoes {
+    float: left;
+}
+
+.daf-logo {
+    float: left;
+    width: 160px;
+    height: 140px;
+    margin-top: 90px;
+}
+
+.daf-logo .img {
+    width: 195px;
+    text-align: center;
+    height: 60px;
+    background-size: 140px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.daf-logo .daf-labels {
+    margin: 0 auto;
+    width: 195px;
+    position: relative;
+    margin-top: 5px;
+    height: 50px;
+    text-align: center;
+}
+
+.daf-logo .daf-labels b {
+    font-size: 18px;
+}
+
+.sem-registro {
+    background-image: url("./img-daf-novo.png");
+}
+
+.registrado {
+    background-image: url("./img-daf.png");
+}
+
+.bloqueado {
+    background-image: url("./img-daf-bloq.png");
+}
+
+.botao {
+    display: block;
+    margin: 8px;
+    height: 49px;
+}
+
+.botao a {
+    width: 250px;
+}
+
+.grayscale {
+    -webkit-filter: grayscale(100%);
+}

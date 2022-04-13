@@ -1,0 +1,54 @@
+<link href="/static/style.css" rel="stylesheet">
+{{ fontawesome_html() }}
+{% extends 'bootstrap/base.html' %}
+{% if title %}
+    <title>PAF - Projeto DAF - {{ title }}</title>
+{% else %}
+    <title>PAF - Projeto DAF</title>
+{% endif %}
+
+{% block navbar %}
+    {{ nav.meunavbar.render() }}
+{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+    <link href="/static/style.css" rel="stylesheet">
+    {{ fontawesome_html() }}
+    <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
+{% endblock %}
+{% block content %}
+
+    <div class="container-fluid" style="min-height: 85%">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {#        Conteúdo das páginas ficarão aqui    #}
+        {% block app_content %}
+            <br/>
+            <div class="container">
+                <div class="col-lg-12 text-center">
+                    <img src="./static/sem_daf.png" width="200"/>
+                    <h1>DAF NÃO ENCONTRADO</h1>
+                    <br>
+                    <h3>Conecte um DAF na porta USB do seu computador e reinicie esta aplicação</h3>
+                </div>
+            </div>
+        {% endblock %}
+
+
+    </div>
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+{% endblock %}
+
+</html>

@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block head %}
+    {{ super() }}
+    <link href="/static/cenarios.css" rel="stylesheet">
+{% endblock %}
+
+{% block app_content %}
+
+    <!--<h1>{{ titulo }}</h1>-->
+    <br/>
+    <div class="container">
+        <div class="col-lg-1">
+            <label class="switch">
+                <input type="checkbox" id="contingencia" {% if contingencia %}checked{% endif %}>
+                <span class="slider round"></span>
+            </label>
+        </div>
+        <div class="col-lg-11 text-left">
+            <span style="font-size: 25px;"
+                  id="contingencia_label">Emissão em contingência off-line <b>{% if contingencia %}Ligada{% else %}
+                Desligada{% endif %}</b></span>
+        </div>
+    </div>
+    <div class="container timeline">
+        <div class="nivel" id="nivel_0">
+            <div class="daf-logo">
+                {% if nivel == 0 %}
+                    <a role="button" rota="/consultarDAFConectadoModal" data-toggle="modal" data-target="#janelaModal"
+                       title="Clique para consultar DAF">{% endif %}
+                <div class="img sem-registro {% if nivel != 0 %}grayscale{% endif %}"></div>
+                {% if nivel == 0 %}</a>{% endif %}
+                <div class="daf-labels">
+                    <span>{% if nivel == 0 %}<b>{{ situacao_label }}</b>{% endif %}</span>
+                </div>
+            </div>
+            <div class="col-setas">
+                <div class="seta" style="transform: rotate(328deg);">
+                    <span style="display: none;"></span>
+                </div>
+                <div class="seta" style="transform: rotate(0deg); margin-top: 68px;">
+                    <span></span>
+                </div>
+            </div>
+            <div class="col-botoes">
+                {% if metodos.nivel_0|length < 3 %}
+                    <div class="botao" style="padding-bottom: 85px"></div>
+                {% endif %}
+                {% for c in metodos.nivel_0 %}
+                    <div class="botao">
+                        <a role="button" rota="/{{ c.rota }}" data-toggle="modal" data-target="#janelaModal"
+                           class="btn btn-lg {% if nivel != 0 %}btn-default disabled {% else %}btn-info{% endif %} btn-cenario">
+                            {{ c.nome }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% if nivel >= 1 %}
+            <div class="nivel" id="nivel_1">
+                <div class="daf-logo">
+                    {% if nivel == 1 %}
+                        <a role="button" rota="/consultarDAFConectadoModal" data-toggle="modal"
+                           data-target="#janelaModal"
+                           title="Clique para consultar DAF">{% endif %}
+                    <div class="img registrado {% if nivel != 1 %}grayscale{% endif %}"
+                         {% if nivel != 1 %}style="margin-top: 10px;"{% endif %}></div>
+                    {% if nivel == 1 %}</a>{% endif %}
+                    <div class="daf-labels">
+                        <span style="display: block;">{% if nivel == 1 %}<b>{{ situacao_label }}</b>{% endif %}</span>
+                        <span>{% if nivel == 1 %}{{ retidas|safe }}{% endif %}</span>
+                    </div>
+                </div>
+                <div class="col-setas">
+                    <div class="seta" style="transform: rotate(328deg);">
+                        <span></span>
+                    </div>
+                    <div class="seta" style="transform: rotate(-19deg); margin-top: 45px;">
+                        <span></span>
+                    </div>
+                    <div class="seta" style="transform: rotate(14deg)">
+                        <span></span>
+                    </div>
+                    <div class="seta" style="transform: rotate(27deg); margin-top: 40px;">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-botoes">
+                    {% if metodos.nivel_1|length < 3 %}
+                        <div class="botao"></div>
+                        <div class="botao"></div>
+                    {% endif %}
+                    {% for c in metodos.nivel_1 %}
+                        <div class="botao">
+                            <a id="{{ c.id }}" role="button" rota="/{{ c.rota }}" data-toggle="modal"
+                               data-target="#janelaModal"
+                               class="btn btn-lg {% if not c.disponivel or nivel != 1 %}btn-default disabled {% else %}btn-info{% endif %} btn-cenario">
+                                {{ c.nome }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% if nivel >= 2 %}
+            <div class="nivel" id="nivel_2">
+                <div class="daf-logo">
+                    {% if nivel == 2 %}
+                        <a role="button" rota="/consultarDAFConectadoModal" data-toggle="modal"
+                           data-target="#janelaModal"
+                           title="Clique para consultar DAF">{% endif %}
+                    <div class="img bloqueado {% if nivel != 2 %}grayscale{% endif %}"
+                            {% if nivel != 2 %} style="margin-top: 10px;"{% endif %}>
+                    </div>
+                    {% if nivel == 2 %}</a>{% endif %}
+                    <div class="daf-labels">
+                        <span style="display: block;">{% if nivel == 2 %}<b>{{ situacao_label }}</b>{% endif %}</span>
+                        <span>{% if nivel == 2 %}{{ retidas|safe }}{% endif %}</span>
+                    </div>
+                </div>
+                <div class="col-setas">
+                    <div class="seta" style="transform: rotate(328deg);">
+                        <span style="display: none;"></span>
+                    </div>
+                    <div class="seta" style="transform: rotate(0deg); margin-top: 68px;">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-botoes">
+                    {% if metodos.nivel_2|length < 3 %}
+                        <div class="botao" style="padding-bottom: 85px"></div>
+                    {% endif %}
+                    {% for c in metodos.nivel_2 %}
+                        <div class="botao">
+                            <a role="button" rota="/{{ c.rota }}" data-toggle="modal" data-target="#janelaModal"
+                               class="btn btn-lg {% if nivel != 2 %}btn-default disabled {% else %}btn-info{% endif %} btn-cenario">
+                                {{ c.nome }}
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <a id="notas_off" role="button" rota="/notas_offSucesso" data-toggle="modal" data-target="#janelaModal"></a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="janelaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" style="width:98%;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modalLabel"></h4>
+                </div>
+                <div class="modal-body">
+                    <iframe id="iframeModal" src="/" width="100%" height="70%" frameborder="0"
+                            allowtransparency="true"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+{% endblock %}
+{% block scripts %}
+    {{ super() }}
+    <script type='text/javascript'
+            src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+    <script type='text/javascript'
+            src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table-locale-all.min.js"></script>
+    <script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>
+    <script type="text/javascript" src="http://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>
+    <script type='text/javascript'>
+        $(window).load(function () {
+            $(function () {
+                {% for p in paineis %}
+                    {% if p.tipo ==2 %}
+                        $('#table_{{ p.id }}').bootstrapTable({
+                            data: {{ p.data|tojson }},
+                            columns: {{p.columns|tojson}},
+                            locale: "pt-BR"
+                        });
+                    {% endif %}
+                {% endfor %}
+            });
+            {% for p in paineis %}
+                $('#{{ p.id }}').on('hide.bs.collapse', function () {
+                    $('#btn-{{ p.id }} i').removeClass("fa-eye-slash");
+                    $('#btn-{{ p.id }} i').addClass("fa-eye");
+                    $('#btn-{{ p.id }}').attr("title", "Mostrar");
+                })
+                $('#{{ p.id }}').on('show.bs.collapse', function () {
+                    $('#btn-{{ p.id }} i').removeClass("fa-eye");
+                    $('#btn-{{ p.id }} i').addClass("fa-eye-slash");
+                    $('#btn-{{ p.id }}').attr("title", "Ocultar");
+                })
+            {% endfor %}
+
+            $('#janelaModal').on('show.bs.modal', function (e) {
+                $("#iframeModal").attr("src", $(e.relatedTarget).attr("rota"));
+                $("#modalLabel").text($(e.relatedTarget).text());
+            })
+
+            $('#janelaModal').on('hide.bs.modal', function (e) {
+                location.reload();
+            })
+            $('.timeline').stop().animate({
+                scrollLeft: $("#{{ id_foco }}").offset().left
+            }, 200);
+
+            $("#contingencia").change(function () {
+                var on = $("#contingencia").is(":checked");
+                var tpemis = 1;
+                var botao = $("#emitirNota");
+                if (on) {
+                    $("#contingencia_label b").text("Ligada");
+                    tpemis = 9;
+                    botao.attr("rota", "vendaOfflineComDafSucesso");
+                } else {
+                    $("#contingencia_label b").text("Desligada");
+                    tpemis = 1;
+                    botao.attr("rota", "vendaComDafSucesso");
+                    //abre tela com as notas que ficaram presas p/ enviar p/ SVRS
+                    $("#notas_off").click();
+                    $("#modalLabel").text("NFC-e pendentes de envio");
+                }
+
+                $.post($SCRIPT_ROOT + '/alterarTpEmis', {tpEmis: tpemis}, function (data) {
+                }, 'json');
+            });
+        });
+    </script>
+{% endblock %}

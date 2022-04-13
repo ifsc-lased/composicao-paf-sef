@@ -1,0 +1,6 @@
+{
+  "certificado_sefazrsfake":{
+      "certificado": "resources/certificadoSEFAZprot.pfx",
+      "senha": "123456"
+    }
+}
