@@ -4,7 +4,7 @@
 >
 >A presente prova de conceito (POC) é um artefato fruto do Contrato de Encomenda Tecnológica nº 001/2020, firmado entre a Secretaria de Estado da Fazenda de Santa Catarina e o Instituto Federal de Santa Catarina - IFSC.
 >
->O objetivo desta prova de conceito é restrito aos objetivos contratados entre a SEF e o IFSC, compatível apenas com a versão 1.0.0 da especificação técnica de requisitos do DAF. Este artefato não tem como objetivo implementar completamente todos os processos de negócio previstos na especificação, visto que seu intuito foi demonstrar a viabilidade de implementação, tanto do DAF quanto da integração entre o PAF, DAF e a SEF-SC, utilizando tecnologias amplamente adotadas pelo mercado de desenvolvimento de software.
+>O objetivo desta prova de conceito é restrito aos objetivos contratados entre a SEF e o IFSC, compatível apenas com a versão 2.0.1 da especificação técnica de requisitos do DAF. Este artefato não tem como objetivo implementar completamente todos os processos de negócio previstos na especificação, visto que seu intuito foi demonstrar a viabilidade de implementação, tanto do DAF quanto da integração entre o PAF, DAF e a SEF-SC, utilizando tecnologias amplamente adotadas pelo mercado de desenvolvimento de software.
 >
 >Não cabe à SEF ou ao IFSC prestar suporte sobre os componentes, códigos ou excertos de código disponíveis nesta POC, sendo a presente versão considerada final, sem previsão de alterações, correção de bugs ou melhorias.
 >
@@ -30,7 +30,7 @@
   - [Dependências e bibliotecas de terceiros](#dependências-e-bibliotecas-de-terceiros)
 ## Introdução
 
-Na [Especificação 1.0.0 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/136/DAF_Especificacao_de_Requisitos_1.0.0.pdf) são apresentados todos os casos de uso e protocolos que devem ser implementados pelo DAF para que o mesmo possa ser comandado pelo Programa Aplicativo Fiscal (PAF), bem como são listados todos os Serviços *Web* (*Web Services*) da Secretaria de Estado da Fazenda (SEF) que poderão ser consumidos pelo PAF para emissão de Nota Fiscal de Consumidor Eletrônica (NFC-e) em Santa Catarina no contexto do uso do Dispositivo Autorizador Fiscal (DAF), o que inclui o registro do DAF a validação de autorizações emitidas pelo mesmo. 
+Na [Especificação 2.0.1 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/159/DAF_Especificacao_de_Requisitos_2.0.1.pdf.pdf) são apresentados todos os casos de uso e protocolos que devem ser implementados pelo DAF para que o mesmo possa ser comandado pelo Programa Aplicativo Fiscal (PAF), bem como são listados todos os Serviços *Web* (*Web Services*) da Secretaria de Estado da Fazenda (SEF) que poderão ser consumidos pelo PAF para emissão de Nota Fiscal de Consumidor Eletrônica (NFC-e) em Santa Catarina no contexto do uso do Dispositivo Autorizador Fiscal (DAF), o que inclui o registro do DAF a validação de autorizações emitidas pelo mesmo. 
 
 Este repositório apresenta uma implementação de um Programa Aplicativo Fiscal (PAF), os Serviços *Web* da  Secretaria do Estado da Fazenda de Santa Catarina (SEF) e uma implementação da SEFAZ Autorizadora e tem como público alvo desenvolvedores de PAF e fabricantes de DAF.
 
@@ -39,7 +39,7 @@ A implementação do PAF, da SEF e da SEFAZ autorizadora são disponibilizadas d
 ![alt text](res/cenario.png "Entidades do projeto DAF")
 
 1. [**DAF-pi**](https://github.com/ifsc-lased/daf-pi)
-   - Implementação em Python3 de todos os casos de uso da [Especificação 1.0.0 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/136/DAF_Especificacao_de_Requisitos_1.0.0.pdf) para ser executada exclusivamente em uma [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/). O DAF-pi só pode ser usado como ferramenta de apoio para desenvolvimento do PAF, uma vez que a Raspberry Pi não atende os requisitos de segurança da especificação do DAF. O código fonte, bem como as instruções para instalar a imagem na Raspberry PI Zero W, estão disponíveis [neste repositório](https://github.com/ifsc-lased/daf-pi).
+   - Implementação em Python3 de todos os casos de uso da [Especificação 2.0.1 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/159/DAF_Especificacao_de_Requisitos_2.0.1.pdf.pdf) para ser executada exclusivamente em uma [Raspberry Pi Zero W](https://www.raspberrypi.org/products/raspberry-pi-zero-w/). O DAF-pi só pode ser usado como ferramenta de apoio para desenvolvimento do PAF, uma vez que a Raspberry Pi não atende os requisitos de segurança da especificação do DAF. O código fonte, bem como as instruções para instalar a imagem na Raspberry PI Zero W, estão disponíveis [neste repositório](https://github.com/ifsc-lased/daf-pi).
      - O [**DAF-pi**](https://github.com/ifsc-lased/daf-pi) foi desenvolvido considerando que seria mais fácil para o desenvolvedor de PAF adquirir no mercado uma Raspberry Pi Zero W. Contudo, também foi feita uma prova de conceito de DAF, denominada [DAF-poc](https://github.com/ifsc-lased/daf-poc), em um *hardware* com o microcontrolador MAX 32552 da Maxim. O código fonte desta prova de conceito pode ser obtido [neste repositório](https://github.com/ifsc-lased/daf-poc).
 2. Composição com PAF, SEF e SEFAZ Autorizadora (este repositório)
    - **PAF** 
@@ -47,7 +47,7 @@ A implementação do PAF, da SEF e da SEFAZ autorizadora são disponibilizadas d
    - **SEFAZ Autorizadora** 
       - A SEFAZ Autorizadora no *kit* de desenvolvimento tem como foco somente o caso de uso para autorização de uso de DF-e. A implementação consiste de uma simples rotina de persistência do DF-e autorizado para uso no banco de dados relacional usado pelo PAF. Sendo assim, não consiste de uma implementação real da SEFAZ autorizadora.
    - **Secretaria do Estado da Fazenda de Santa Catarina (SEF)** 
-      - A [SEF](sef) no *kit* de desenvolvimento provê implementação para os todos os casos de uso que envolvam diretamente o contribuinte e seu DAF, conforme apresentado na [Especificação 1.0.0 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/136/DAF_Especificacao_de_Requisitos_1.0.0.pdf), como por exemplo: registro de DAF, remoção de registro, autorização para remoção de autorização retida no DAF, entre outras.
+      - A [SEF](sef) no *kit* de desenvolvimento provê implementação para os todos os casos de uso que envolvam diretamente o contribuinte e seu DAF, conforme apresentado na [Especificação 2.0.1 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/159/DAF_Especificacao_de_Requisitos_2.0.1.pdf.pdf), como por exemplo: registro de DAF, remoção de registro, autorização para remoção de autorização retida no DAF, entre outras.
 
 ## Composição Docker com PAF, SEF e SEFAZ Autorizadora 
 
@@ -270,12 +270,16 @@ Além disso, o PAF não implementa as interações junto à SEF com os seguintes
 * Solicitação de remoção da memória do DAF de documentos fiscais eletrônicos com rejeição
 * Solicitação extraordinária para apagar autorizações retidas no DAF
 
-A SEF desta composição também não implementa o serviço relativo ao *endpoint* `DAFAutorizacaoRetida`, especificado na seção 8.8 da [Especificação Técnica de Requisitos 1.0.0](https://www.sef.sc.gov.br/arquivos_portal/servicos/136/DAF_Especificacao_de_Requisitos_1.0.0.pdf) do DAF.
+A SEF desta composição também não implementa o serviço relativo ao *endpoint* `DAFAutorizacaoRetida`, especificado na seção 8.8 da [Especificação Técnica de Requisitos 2.0.1](https://www.sef.sc.gov.br/arquivos_portal/servicos/159/DAF_Especificacao_de_Requisitos_2.0.1.pdf.pdf) do DAF.
 
 
 ### Valor do *timeout* da camada ARQ do protocolo de comunicação do DAF
 
-Para que seja possível fazer a comunicação o PAF desta composição e o [DAF-pi](https://https://github.com/ifsc-lased/daf-pi), o valor do timeout da camada ARQ do protocolo de comunicação do DAF deste aplicativo é de **2 segundos**, em desacordo com a [Especificação 1.0.0 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/136/DAF_Especificacao_de_Requisitos_1.0.0.pdf). Esta mudança não impacta na comunicação entre o PAF e os demais DAFs.
+Para que seja possível fazer a comunicação o PAF desta composição e o [DAF-pi](https://https://github.com/ifsc-lased/daf-pi), o valor do timeout da camada ARQ do protocolo de comunicação do DAF deste aplicativo é de **2 segundos**, em desacordo com a [Especificação 2.0.1 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/159/DAF_Especificacao_de_Requisitos_2.0.1.pdf.pdf). Esta mudança não impacta na comunicação entre o PAF e os demais DAFs.
+
+### Aplicação PAF
+
+Recomenda-se o uso do *Google Chrome* para acessar a aplicação PAF.
 
 ## Dependências e bibliotecas de terceiros
 

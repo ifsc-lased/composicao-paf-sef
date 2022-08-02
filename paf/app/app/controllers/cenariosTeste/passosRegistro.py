@@ -148,7 +148,7 @@ def passo_chave_paf():
     res_id = 0
     erro = False
     try:
-        payload = jwt.decode(token, verify=False)
+        payload = jwt.decode(token, algorithms=['HS256','RS256','ES384','ES256'], options={"verify_signature": False})
         chavepaf = payload['chp']
         daf = Daf.query.order_by(desc(Daf.data_insercao)).first()
         daf.chave_paf = chavepaf

@@ -39,7 +39,7 @@ def add_daf():
 
     dafs = Daf.query.filter_by(id_daf=resjson['daf']).all()
     if len(dafs) < 1:
-        daf = Daf(resjson['daf'], resjson['mop'], resjson['vsb'], resjson['hsb'], resjson['fab'], resjson['mdl'],
+        daf = Daf(resjson['daf'], resjson['mop'], resjson['vsb'], resjson['sig'], resjson['fab'], resjson['mdl'],
                   resjson['cnt'], resjson['crt'], resjson['est'], 'jau', resjson['mxd'], len(resjson['rts']),
                   "",
                   str(resjson['als']))
@@ -106,7 +106,7 @@ def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None,
         daf.id_daf = infos_daf['daf']
         daf.modo_operacao = infos_daf['mop']
         daf.versao_sb = infos_daf['vsb']
-        daf.hash_sb = infos_daf['hsb']
+        daf.sig = infos_daf['sig']
         daf.cnpj_fabricante = infos_daf['fab']
         daf.modelo = infos_daf['mdl']
         daf.contador = infos_daf['cnt']

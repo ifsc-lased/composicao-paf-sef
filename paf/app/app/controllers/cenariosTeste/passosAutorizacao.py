@@ -205,8 +205,7 @@ def passo_autorizar_dfe():
             db.session.commit()
             infos_json["token"] = res_daf_json["jwt"]
             infos = json.dumps(infos_json)
-
-            pl = jwt.decode(res_daf_json["jwt"], options={"verify_signature": False})
+            pl = jwt.decode(res_daf_json["jwt"], algorithms=['HS256','RS256','ES384','ES256'], options={"verify_signature": False})
             pedido = {"antes": "Conjunto essencial: " + essencial + "\nDocumento completo: " + completo,
                       "texto": ped_daf,
                       "tipo": "json"}

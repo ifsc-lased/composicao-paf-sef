@@ -41,7 +41,7 @@ class ProtocoloDaf:
         Returns:
             [str]: mensagem a ser enviada ao DAF
         """
-        payload = jwt.decode(token, verify=False)
+        payload = jwt.decode(token, algorithms=['HS256','RS256','ES384','ES256'], options={"verify_signature": False})
         chave_paf = payload['chp']
 
         msg = {"msg": 2, "jwt": token}

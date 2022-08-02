@@ -30,11 +30,11 @@ class JWTDAF:
             if alg == 'RS256':
                 header = {'typ': 'JWT', 'alg': alg}
                 tokenJWT = jwt.encode(
-                    payload, privkey.chave_bytes, algorithm=alg, headers=header).decode('utf-8')
+                    payload, privkey.chave_bytes, algorithm=alg, headers=header)
             elif alg == 'HS256':
                 header = {'typ': 'JWT', 'alg': alg}
                 tokenJWT = jwt.encode(
-                    payload, bytes.fromhex(privkey), algorithm=alg, headers=header).decode('utf-8')
+                    payload, bytes.fromhex(privkey), algorithm=alg, headers=header)
             else:
                 raise Exception(
                     "Algoritmo de assinatura digital não suportado")
@@ -43,7 +43,7 @@ class JWTDAF:
                 key_jwk = jwk.dumps(pubkey.chave_bytes, kty='RSA')
                 header = {'jwk': key_jwk}
                 tokenJWT = jwt.encode(
-                    payload, privkey.chave_bytes, algorithm='RS256', headers=header).decode('utf-8')
+                    payload, privkey.chave_bytes, algorithm='RS256', headers=header)
             else:
                 raise Exception(
                     "Algoritmo de assinatura digital não suportado")
