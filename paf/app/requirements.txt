@@ -8,7 +8,13 @@ flask-nav==0.6
 pymysql==1.0.2
 pytest==6.2.5
 bradocs4py==1.3.1.0
-https://github.com/TadaSoftware/PyNFe/archive/master.zip
+## Requisitos PyNFe
+pyOpenSSL==20.0.1
+requests==2.28.1
+lxml==4.9.1
+signxml==2.9.0
+###################
+pynfe==0.4.2
 weasyprint==54.0
 Flask-QRcode==3.0.0
 redis==4.1.1
