@@ -107,9 +107,9 @@ class Enquadramento(Layer):
             self.estado = ESTADO_t.RX_DADO.value
         elif len(self.campo_dados) == self.valor_tamanho - 1:
             self.campo_dados += byte
-            self.disable_timeout()
             self.estado = ESTADO_t.IDLE.value
             self.superior.notifica(self.campo_dados[0], self.campo_dados[1:], self.campo_tipo, )
+            self.disable_timeout()
             self.__zera_variaveis()
 
        
