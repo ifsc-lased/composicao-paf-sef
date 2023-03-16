@@ -125,7 +125,7 @@ def get_situacao_daf(k):
     labels[1] = 'Registrado'
     labels[2] = 'Extraviado'
     labels[3] = 'ATUALIZAR SB'
-    labels[4] = 'Registro inregular'
+    labels[4] = 'Registro irregular'
     labels[5] = 'Divergências no registro'
     labels[6] = 'Bloqueado'
     if labels[k] is not None:

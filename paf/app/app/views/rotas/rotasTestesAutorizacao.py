@@ -119,6 +119,17 @@ def apagarRetida(tipo=""):
 
     return render_template("cenario_teste_modal.html", titulo="Apagar autorização retida", passos=passos, tipo=tipo)
 
+@app.route("/consultarAutorizacoes<string:tipo>", methods=["GET"])
+def consultarAutorizacoes(tipo=""):
+    passos = [
+         {
+            "rota": "passo_consultar_autorizacoes_daf",
+            "descricao": "Consultar autorizações",
+            "ator": "daf"
+        }
+    ]
+
+    return render_template("cenario_teste_modal.html", titulo="Consultar autorizações", passos=passos, tipo=tipo)
 
 @app.route("/notas_off<string:tipo>", methods=["GET"])
 def notas_off(tipo=""):

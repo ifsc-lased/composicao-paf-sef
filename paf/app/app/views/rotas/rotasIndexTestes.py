@@ -89,6 +89,11 @@ def cenario_autorizacao():
             "nome": "Apagar autorização retida",
             "id": "apagarRetida",
             "disponivel": retidas
+        }, {
+            "rota": "consultarAutorizacoesSucesso",
+            "nome": "Consultar autorizações",
+            "id": "consultarAutorizacoes",
+            "disponivel": retidas
         }
     ]
 

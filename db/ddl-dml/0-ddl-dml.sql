@@ -405,6 +405,8 @@ DROP TABLE IF EXISTS `certificado_sef`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `certificado_sef` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `cfp` varchar(255) NOT NULL,
+  `ca_cfp` varchar(255) NOT NULL,
   `aviso_vigencia` datetime(6) DEFAULT NULL,
   `fim_vigencia` datetime(6) DEFAULT NULL,
   `inicio_vigencia` datetime(6) DEFAULT NULL,
@@ -420,7 +422,7 @@ CREATE TABLE `certificado_sef` (
 
 LOCK TABLES `certificado_sef` WRITE;
 /*!40000 ALTER TABLE `certificado_sef` DISABLE KEYS */;
-INSERT INTO `certificado_sef` VALUES (1,NULL,NULL,'2021-07-11 13:12:55.533000','sef-rsa-2048.pkcs12','PKCS12'),(2,NULL,NULL,'2021-07-12 13:13:09.527000','sef-rsa-4096.pkcs12','PKCS12'),(3,NULL,NULL,'2021-07-12 13:13:09.527000','sef-ec-384.pkcs12','PKCS12');
+INSERT INTO `certificado_sef` VALUES (1,'J33D3Kr4R0TKyHYm3TYtUIhvOjAFmOg86x63ndD-bAU','J33D3Kr4R0TKyHYm3TYtUIhvOjAFmOg86x63ndD-bAU',NULL,NULL,'2021-07-11 13:12:55.533000','sef-rsa-2048.pkcs12','PKCS12'),(2,'utBtrlaIFV_zKR6oZMtV0oXARqlSfCa0pT2uHaDJLe8','utBtrlaIFV_zKR6oZMtV0oXARqlSfCa0pT2uHaDJLe8',NULL,NULL,'2021-07-12 13:13:09.527000','sef-rsa-4096.pkcs12','PKCS12'),(3,'SdFcN6lp3DImbcsgZBOPvXc2HMdBC3juLkD6ee4Fz5w','SdFcN6lp3DImbcsgZBOPvXc2HMdBC3juLkD6ee4Fz5w',NULL,NULL,'2021-07-12 13:13:09.527000','sef-ec-384.pkcs12','PKCS12');
 /*!40000 ALTER TABLE `certificado_sef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -539,6 +541,7 @@ DROP TABLE IF EXISTS `daf`;
 CREATE TABLE `daf` (
   `id_daf` varchar(255) NOT NULL,
   `contador_atual` int NOT NULL,
+  `cfp_atual` varchar(255) DEFAULT NULL,
   `data_extravio` datetime(6) DEFAULT NULL,
   `justificativa_extravio` varchar(255) DEFAULT NULL,
   `situacao` int NOT NULL,
@@ -555,7 +558,7 @@ CREATE TABLE `daf` (
 
 LOCK TABLES `daf` WRITE;
 /*!40000 ALTER TABLE `daf` DISABLE KEYS */;
-INSERT INTO `daf` VALUES ('ChAgT4LGSbKXo4UO8m6Cbg',2,NULL,NULL,1,2);
+INSERT INTO `daf` VALUES ('ChAgT4LGSbKXo4UO8m6Cbg',2,'SdFcN6lp3DImbcsgZBOPvXc2HMdBC3juLkD6ee4Fz5w',NULL,NULL,1,2);
 /*!40000 ALTER TABLE `daf` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -771,7 +774,7 @@ CREATE TABLE `modelo_daf_certificados_sef` (
 
 LOCK TABLES `modelo_daf_certificados_sef` WRITE;
 /*!40000 ALTER TABLE `modelo_daf_certificados_sef` DISABLE KEYS */;
-INSERT INTO `modelo_daf_certificados_sef` VALUES (NULL,NULL,NULL,'2021-07-11 13:12:55.533000',1,1),('1',NULL,NULL,'2021-07-11 13:12:55.533000',1,2),('1',NULL,NULL,'2021-07-12 13:13:09.527000',2,4),('1',NULL,NULL,'2021-07-12 13:13:09.527000',3,3);
+INSERT INTO `modelo_daf_certificados_sef` VALUES ('1',NULL,NULL,'2021-07-11 13:12:55.533000',1,1),('1',NULL,NULL,'2021-07-11 13:12:55.533000',1,2),('1',NULL,NULL,'2021-07-12 13:13:09.527000',2,4),('1',NULL,NULL,'2021-07-12 13:13:09.527000',3,3);
 /*!40000 ALTER TABLE `modelo_daf_certificados_sef` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -979,7 +982,7 @@ CREATE TABLE `resultado` (
 
 LOCK TABLES `resultado` WRITE;
 /*!40000 ALTER TABLE `resultado` DISABLE KEYS */;
-INSERT INTO `resultado` VALUES (1000,_binary '',_binary '\0','Solicitação recebida com sucesso'),(1001,_binary '',_binary '\0','Dispositivo registrado com sucesso'),(1002,_binary '',_binary '\0','Registro de dispositivo removido'),(1003,_binary '',_binary '\0','Consulta de Software Basico efetuada com sucesso'),(1004,_binary '',_binary '\0','Notificacao de extravio efetuada com sucesso'),(1005,_binary '',_binary '\0','Validacao do fragmento DAF realizada com sucesso'),(1006,_binary '',_binary '\0','Modo de operação alterado com sucesso'),(2000,_binary '\0',_binary '','registro do idDaf não encontrado'),(2001,_binary '\0',_binary '','idpaf não corresponde ao registro do DAF'),(2002,_binary '\0',_binary '','nonce não corresponde ao informado pela SEF'),(2003,_binary '\0',_binary '','valor do mcounter inválido'),(2004,_binary '\0',_binary '','assinatura de token inválida'),(2005,_binary '\0',_binary '','CNPJ do contribuinte diverge do CNPJ da assinatura'),(2006,_binary '\0',_binary '','idpaf não registrado'),(2007,_binary '\0',_binary '','DAF extraviado'),(2008,_binary '\0',_binary '','idDaf do token não corresponde ao IdDAF informado'),(2009,_binary '\0',_binary '','DAF em situação irregular'),(2010,_binary '\0',_binary '','justificativa inválida. A justificativa deve conter entre 15 e 255 caracteres'),(2011,_binary '\0',_binary '','consumo indevido pelo aplicativo da empresa. Permitido no máximo 40 requisições por hora'),(2012,_binary '\0',_binary '','CNPJ do fabricante DAF inválido'),(2013,_binary '\0',_binary '','modelo DAF inválido'),(2100,_binary '\0',_binary '','hash do idpaf diverge do calculado'),(2101,_binary '\0',_binary '','assinatura gerada pela attestationkey não corresponde a um modelo de DAF certificado'),(2102,_binary '\0',_binary '','CNPJ do responsável técnico inválido'),(2103,_binary '\0',_binary '','identificador do CSRT (tag:idCSRT) não cadastrado na SEF'),(2104,_binary '\0',_binary '','identificador do CSRT (tag:idCSRT) revogado'),(2105,_binary '\0',_binary '','CNPJ do contribuinte não cadastrado'),(2108,_binary '\0',_binary '','CNPJ do responsável técnico não cadastrado'),(2300,_binary '\0',_binary '','IdDAF do requerente não corresponde ao IdDAF de autorização do DFe'),(2301,_binary '\0',_binary '','chave DFe não encontrada'),(2302,_binary '\0',_binary '','DAF deve atualizar a versão do software básico'),(2303,_binary '\0',_binary '','versão do software básico do DAF está desatualizada'),(2304,_binary '\0',_binary '','token de autorização inválido'),(2400,_binary '\0',_binary '','remoção extraordinária de autorização retida indisponível para o contribuinte'),(2401,_binary '\0',_binary '','número de recibo não encontrado'),(2402,_binary '\0',_binary '','lote em processamento'),(2403,_binary '\0',_binary '','a rejeição informada para o DF-e é inválida'),(2404,_binary '\0',_binary '','as informações essenciais do DF-e são inválidas'),(2500,_binary '\0',_binary '','notificação de extravio do DAF já foi realizada'),(2600,_binary '\0',_binary '','o modo de operação já informado anteriormente'),(9999,_binary '\0',_binary '','Erro não catalogado');
+INSERT INTO `resultado` VALUES (1000,_binary '',_binary '\0','Solicitação recebida com sucesso'),(1001,_binary '',_binary '\0','Dispositivo registrado com sucesso'),(1002,_binary '',_binary '\0','Registro de dispositivo removido'),(1003,_binary '',_binary '\0','Consulta de Software Basico efetuada com sucesso'),(1004,_binary '',_binary '\0','Notificacao de extravio efetuada com sucesso'),(1005,_binary '',_binary '\0','Validacao do fragmento DAF realizada com sucesso'),(1006,_binary '',_binary '\0','Modo de operação alterado com sucesso'),(2000,_binary '\0',_binary '','registro do idDaf não encontrado'),(2001,_binary '\0',_binary '','idpaf não corresponde ao registro do DAF'),(2002,_binary '\0',_binary '','nonce não corresponde ao informado pela SEF'),(2003,_binary '\0',_binary '','valor do mcounter inválido'),(2004,_binary '\0',_binary '','assinatura de token inválida'),(2005,_binary '\0',_binary '','CNPJ do contribuinte diverge do CNPJ da assinatura'),(2006,_binary '\0',_binary '','idpaf não registrado'),(2007,_binary '\0',_binary '','DAF extraviado'),(2008,_binary '\0',_binary '','idDaf do token não corresponde ao IdDAF informado'),(2009,_binary '\0',_binary '','DAF em situação irregular'),(2010,_binary '\0',_binary '','justificativa inválida. A justificativa deve conter entre 15 e 255 caracteres'),(2011,_binary '\0',_binary '','consumo indevido pelo aplicativo da empresa. Permitido no máximo 40 requisições por hora'),(2012,_binary '\0',_binary '','CNPJ do fabricante DAF inválido'),(2013,_binary '\0',_binary '','modelo DAF inválido'),(2014,_binary '\0',_binary '','impressão digital do certificado digital da SEF informada não é reconhecida'),(2015,_binary '\0',_binary '','versão do Software Básico informada não é reconhecida'),(2100,_binary '\0',_binary '','hash do idpaf diverge do calculado'),(2101,_binary '\0',_binary '','assinatura gerada pela attestationkey não corresponde a um modelo de DAF certificado'),(2102,_binary '\0',_binary '','CNPJ do responsável técnico inválido'),(2103,_binary '\0',_binary '','identificador do CSRT (tag:idCSRT) não cadastrado na SEF'),(2104,_binary '\0',_binary '','identificador do CSRT (tag:idCSRT) revogado'),(2105,_binary '\0',_binary '','CNPJ do contribuinte não cadastrado'),(2108,_binary '\0',_binary '','CNPJ do responsável técnico não cadastrado'),(2300,_binary '\0',_binary '','IdDAF do requerente não corresponde ao IdDAF de autorização do DFe'),(2301,_binary '\0',_binary '','chave DFe não encontrada'),(2302,_binary '\0',_binary '','DAF deve atualizar a versão do software básico'),(2303,_binary '\0',_binary '','versão do software básico do DAF está desatualizada'),(2304,_binary '\0',_binary '','token de autorização inválido'),(2305,_binary '\0',_binary '','DAF deve atualizar o certificado digital da SEF'),(2400,_binary '\0',_binary '','remoção extraordinária de autorização retida indisponível para o contribuinte'),(2401,_binary '\0',_binary '','número de recibo não encontrado'),(2402,_binary '\0',_binary '','lote em processamento'),(2403,_binary '\0',_binary '','a rejeição informada para o DF-e é inválida'),(2404,_binary '\0',_binary '','as informações essenciais do DF-e são inválidas'),(2500,_binary '\0',_binary '','notificação de extravio do DAF já foi realizada'),(2600,_binary '\0',_binary '','o modo de operação já informado anteriormente'),(9999,_binary '\0',_binary '','Erro não catalogado');
 /*!40000 ALTER TABLE `resultado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -994,6 +997,8 @@ CREATE TABLE `software_basico` (
   `id` int NOT NULL AUTO_INCREMENT,
   `data_lancamento` datetime(6) DEFAULT NULL,
   `resumo_criptografico` varchar(43) DEFAULT NULL,
+  `sig_sef` varchar(2000) DEFAULT NULL,
+  `cfp_sig_sef` varchar(2000) DEFAULT NULL,
   `url` varchar(2000) DEFAULT NULL,
   `versao` int NOT NULL,
   `certificacao_fk_id` int DEFAULT NULL,
@@ -1009,7 +1014,7 @@ CREATE TABLE `software_basico` (
 
 LOCK TABLES `software_basico` WRITE;
 /*!40000 ALTER TABLE `software_basico` DISABLE KEYS */;
-INSERT INTO `software_basico` VALUES (1,'2021-07-18 13:12:55.533000','aQ3SJz-S4Sd0rTHKPeht0JDHdGoMcbv6FrtofvxWwzg','http://sb860967810001851.com.br',1,6),(2,'2020-07-11 13:12:55.533000','CsS3YJ6VOR0lslPrYmppUoTFwO5AwAih_lyy5jzurY8','http://sb860967810001852.com.br',2,3),(3,'2021-07-12 13:13:09.527000','2WPyJbsrfOTaKbFOVyoMnUGzKMk8ljtc3dJpNQLrvFI','http://versaodaflase1.0.br',2,8);
+INSERT INTO `software_basico` VALUES (1,'2021-07-18 13:12:55.533000','aQ3SJz-S4Sd0rTHKPeht0JDHdGoMcbv6FrtofvxWwzg','MGUCMQCo6EID9wl4l0F8r4fnBfgGiLckVsqgoFd0zL00DC03Ny3e57X3f3l19r35L-XJFPoCMGRFJKIl399mDp7yH-4oyuy4VJ0kkaGOPt4AkXQ4zZF4aRQKzKzN4yuhBx48L705Sg','J33D3Kr4R0TKyHYm3TYtUIhvOjAFmOg86x63ndD-bAU','http://sb860967810001851.com.br',1,6),(2,'2020-07-11 13:12:55.533000','CsS3YJ6VOR0lslPrYmppUoTFwO5AwAih_lyy5jzurY8','MGUCMQCo6EID9wl4l0F8r4fnBfgGiLckVsqgoFd0zL00DC03Ny3e57X3f3l19r35L-XJFPoCMGRFJKIl399mDp7yH-4oyuy4VJ0kkaGOPt4AkXQ4zZF4aRQKzKzN4yuhBx48L705Sg','J33D3Kr4R0TKyHYm3TYtUIhvOjAFmOg86x63ndD-bAU','http://sb860967810001852.com.br',2,3),(3,'2021-07-12 13:13:09.527000','2WPyJbsrfOTaKbFOVyoMnUGzKMk8ljtc3dJpNQLrvFI','MGUCMQCo6EID9wl4l0F8r4fnBfgGiLckVsqgoFd0zL00DC03Ny3e57X3f3l19r35L-XJFPoCMGRFJKIl399mDp7yH-4oyuy4VJ0kkaGOPt4AkXQ4zZF4aRQKzKzN4yuhBx48L705Sg','SdFcN6lp3DImbcsgZBOPvXc2HMdBC3juLkD6ee4Fz5w','http://versaodaflase1.0.br',2,8);
 /*!40000 ALTER TABLE `software_basico` ENABLE KEYS */;
 UNLOCK TABLES;
 

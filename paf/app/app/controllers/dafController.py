@@ -37,12 +37,12 @@ def add_daf():
     resposta = paf.enviar_mensagem(msg)
     resjson = json.loads(resposta)
 
+    print(resjson)
     dafs = Daf.query.filter_by(id_daf=resjson['daf']).all()
     if len(dafs) < 1:
         daf = Daf(resjson['daf'], resjson['mop'], resjson['vsb'], resjson['sig'], resjson['fab'], resjson['mdl'],
-                  resjson['cnt'], resjson['crt'], resjson['est'], 'jau', resjson['mxd'], len(resjson['rts']),
-                  "",
-                  str(resjson['als']))
+                  resjson['cnt'], resjson['cfp'], resjson['est'], 'jau', resjson['mxd'], resjson['ndf'],
+                  "")
 
         db.session.add(daf)
     else:
@@ -66,6 +66,9 @@ def consultar_daf():
     msg = paf.consultarInformacoes()
     return paf.enviar_mensagem(msg)
 
+def consultar_autorizacao(ini, fim):
+    msg = paf.consultarAutorizacoes(ini, fim)
+    return paf.enviar_mensagem(msg)
 
 def consultar_dispositivo(id_daf):
     res_sef_cons = etree.fromstring(ws_sef.consultar_dispositivo(id_daf)[1].text)
@@ -97,7 +100,7 @@ def consultar_dispositivo(id_daf):
     return res_sef
 
 
-def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None, infos_sef=None):
+def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None, infos_sef=None, autorizacoes=None):
     if consulta_daf:
         res_daf = consultar_daf()
         infos_daf = json.loads(res_daf)
@@ -110,10 +113,10 @@ def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None,
         daf.cnpj_fabricante = infos_daf['fab']
         daf.modelo = infos_daf['mdl']
         daf.contador = infos_daf['cnt']
-        daf.certificado_sef = infos_daf['crt']
+        daf.cfp_sef = infos_daf['cfp']
         daf.estado = infos_daf['est'].lower()
         daf.max_dfe = infos_daf['mxd']
-        daf.num_dfe = len(infos_daf['rts'])
+        daf.num_dfe = infos_daf['ndf']
 
         if daf.estado == 'inativo' and not daf.data_extravio:
             daf.situacao = 0
@@ -126,7 +129,9 @@ def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None,
 
         if daf.data_extravio:
             daf.situacao = 2
-
+    if autorizacoes is not None:
+        daf.num_dfe = len(autorizacoes['rts'])
+        
     if consulta_sef:
         res_sef = consultar_dispositivo(daf.id_daf)
         infos_sef = res_sef
@@ -162,8 +167,9 @@ def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None,
         if (daf.estado == 'pronto' and not reg_sef) \
                 or (daf.estado == 'inativo' and reg_sef) \
                 or (reg_sef and ((infos_sef["cnpjContribuinte"] != Empresa.query.first().pessoaJuridica.cnpj \
-                                  or infos_sef["cnpjResponsavel"] != FornecedorSistema.cnpj \
-                                  or infos_sef["idCSRT"] != FornecedorSistema.id_csrt))) \
+                                  or infos_sef["cnpjResponsavel"] != FornecedorSistema.query.first().pessoaJuridica.cnpj \
+                                  or infos_sef["idCSRT"] != FornecedorSistema.query.first().id_csrt))) \
+                                  or infos_sef["cnpjFabricante"] != daf.cnpj_fabricante \
                 or (not ext_sef and daf.data_extravio is not None):
             daf.situacao = 5
 
@@ -171,7 +177,7 @@ def atualizacao_daf(daf, consulta_daf=False, consulta_sef=False, infos_daf=None,
         if ext_sef:
             daf.situacao = 2
 
-        if infos_sef["xSituacao"] == "INREGULAR":
+        if infos_sef["xSituacao"] == "IRREGULAR":
             daf.situacao = 4
 
     return daf

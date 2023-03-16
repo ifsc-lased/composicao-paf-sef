@@ -188,6 +188,19 @@ class ProtocoloDaf:
     def confirmarAlterarModoOperacao(token):
         msg = {"msg": 13, 'jwt': token}
         return json.dumps(msg, separators=(',', ':'))
+    
+    @staticmethod
+    def consultarAutorizacoes(ini, fim):
+        """ Gera mensagem de consultar autorizações do DAF
+
+        Returns:
+            [str]: mensagem a ser enviada ao DAF
+        """
+        msg = {}
+        msg['msg'] = 16
+        msg['ini'] = ini
+        msg['fim'] = fim       
+        return json.dumps(msg, separators=(',', ':'))
 
     @staticmethod
     def mensagem_blob(cod):

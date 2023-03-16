@@ -85,7 +85,7 @@ class Daf(db.Model):
     cnpj_fabricante = db.Column(db.String(14), nullable=False)
     modelo = db.Column(db.String(20), nullable=False)
     contador = db.Column(db.Integer, nullable=False)
-    certificado_sef = db.Column(db.Text, nullable=False)
+    cfp_sef = db.Column(db.Text, nullable=False) # Fingerprint do certificado da SEF
     estado = db.Column(db.String(10), nullable=False)
     ultimo_token = db.Column(db.String(255), nullable=False)
     max_dfe = db.Column(db.Integer, nullable=False)
@@ -98,7 +98,7 @@ class Daf(db.Model):
     situacao = db.Column(db.Integer, nullable=True)
 
     def __init__(self, id_daf=None, modo_operacao=None, versao_sb=None, sig=None, cnpj_fabricante=None, modelo=None,
-                 contador=None, certificado_sef=None, estado=None, ultimo_token=None, max_dfe=None, num_dfe=None,
+                 contador=None, cfp_sef=None, estado=None, ultimo_token=None, max_dfe=None, num_dfe=None,
                  porta=None):
         self.id_daf = id_daf
         self.modo_operacao = modo_operacao
@@ -107,7 +107,7 @@ class Daf(db.Model):
         self.cnpj_fabricante = cnpj_fabricante
         self.modelo = modelo
         self.contador = contador
-        self.certificado_sef = certificado_sef
+        self.cfp_sef = cfp_sef
         self.estado = estado
         self.ultimo_token = ultimo_token
         self.max_dfe = max_dfe

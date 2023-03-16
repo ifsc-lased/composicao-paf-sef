@@ -12,7 +12,7 @@ def reset_conectado():
             "ator": "daf"
         },
         {
-            "rota": "passo_consutlar_daf",
+            "rota": "passo_consultar_daf",
             "descricao": "Consultar e atualizar informações",
             "ator": "daf"
         }
@@ -31,7 +31,7 @@ def reset_conectado_novo():
             "ator": "daf"
         },
         {
-            "rota": "passo_consutlar_daf",
+            "rota": "passo_consultar_daf",
             "descricao": "Consultar e atualizar informações",
             "ator": "daf"
         }
@@ -45,7 +45,7 @@ def reset_conectado_novo():
 def consultar_daf_conectado():
     passos = [
         {
-            "rota": "passo_consutlar_daf",
+            "rota": "passo_consultar_daf",
             "descricao": "Consultar e atualizar informações",
             "ator": "daf"
         }
@@ -58,7 +58,7 @@ def consultar_daf_conectado():
 def consultar_daf_conectado_modal():
     passos = [
         {
-            "rota": "passo_consutlar_daf",
+            "rota": "passo_consultar_daf",
             "descricao": "Consultar e atualizar informações",
             "ator": "daf"
         }
@@ -66,12 +66,11 @@ def consultar_daf_conectado_modal():
 
     return render_template("cenario_teste_modal.html", titulo="Consultar DAF", passos=passos, tipo="Sucesso")
 
-
 @app.route('/consultarDAFConectadoSEF')
 def consultar_daf_conectado_sef():
     passos = [
         {
-            "rota": "passo_consutlar_daf_sef",
+            "rota": "passo_consultar_daf_sef",
             "descricao": "Consultar DAF junto à SEF e atualizar informações",
             "ator": "sef"
         }

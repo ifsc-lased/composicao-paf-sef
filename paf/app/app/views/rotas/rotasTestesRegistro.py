@@ -15,7 +15,7 @@ def registrarNovoDaf(tipo=""):
             "ator": "daf"
         }
         , {
-            "rota": "passo_consutlar_daf",
+            "rota": "passo_consultar_daf",
             "descricao": "Consultando informações do DAF",
             "ator": "daf"
         }
@@ -52,7 +52,7 @@ def registrarNovoDaf(tipo=""):
 def registrarDaf(tipo=""):
     passos = [
         {
-            "rota": "passo_consutlar_daf",
+            "rota": "passo_consultar_daf",
             "descricao": "Consultando informações do DAF",
             "ator": "daf"
         }
@@ -89,6 +89,12 @@ def registrarDaf(tipo=""):
 @app.route('/removerRegistro<string:tipo>', methods=['GET'])
 def removerRegistro(tipo=""):
     passos = [
+        {
+            "rota": "passo_consultar_daf",
+            "descricao": "Consultando informações do DAF",
+            "ator": "daf"
+        }
+        ,
         {
             "rota": "passo_remover_ini_sef",
             "descricao": "Iniciar processo de remoção de registro junto à SEF",

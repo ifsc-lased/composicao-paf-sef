@@ -48,6 +48,12 @@ class SefController:
         modo_op = etree.SubElement(inf, 'modoOp')
         modo_op.text = str(daf.modo_operacao)
 
+        versao_sb = etree.SubElement(inf, 'versaoSB')
+        versao_sb.text = str(daf.versao_sb)
+
+        cfp_sef = etree.SubElement(inf, 'certificadoSEF')
+        cfp_sef.text = str(daf.cfp_sef)
+
         certificado, senha = empresa.get_certificado()
 
         a1 = AssinaturaA1(certificado, senha)
@@ -114,6 +120,9 @@ class SefController:
 
         id_paf = etree.SubElement(inf, 'idPAF')
         id_paf.text = empresa.id_paf
+
+        cfp_sef = etree.SubElement(inf, 'certificadoSEF')
+        cfp_sef.text = str(daf.cfp_sef)
 
         x_just = etree.SubElement(inf, 'xJust')
         x_just.text = justificativa

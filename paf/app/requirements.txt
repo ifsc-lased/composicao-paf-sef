@@ -10,19 +10,19 @@ pymysql==1.0.2
 pytest==6.2.5
 bradocs4py==1.3.1.0
 ## Requisitos PyNFe
-pyOpenSSL==20.0.1
-requests==2.28.1
-lxml==4.9.1
-signxml==2.9.0
+pyOpenSSL==23.1.1
+requests==2.28.2
+lxml==4.9.2
+signxml==2.10.1
 ###################
-pynfe==0.4.2
+pynfe==0.4.3
 weasyprint==54.0
 Flask-QRcode==3.0.0
-redis==4.1.1
+redis==4.4.4
 Flask-Session==0.4.0
 pyserial==3.5
 PyJWT==2.4.0
-cryptography==3.3.2
+cryptography==40.0.2
 Authlib==0.15.2
 pytz==2021.3
 WTForms==2.3.3

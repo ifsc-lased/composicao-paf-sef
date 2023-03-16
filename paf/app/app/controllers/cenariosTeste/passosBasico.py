@@ -86,8 +86,8 @@ def passo_padraofab():
     return jsonify(pedido=pedido, resposta=resposta, resultado=resultado, res_id=res_id, token=token, erro=erro)
 
 
-@app.route('/passo_consutlar_daf', methods=['POST'])
-def passo_consutlar_daf():
+@app.route('/passo_consultar_daf', methods=['POST'])
+def passo_consultar_daf():
     token = request.values.get('token')
     pedido = {"texto": "", "tipo": "texto"}
     resposta = {"texto": "", "tipo": "texto"}
@@ -113,9 +113,35 @@ def passo_consutlar_daf():
 
     return jsonify(pedido=pedido, resposta=resposta, resultado=resultado, res_id=res_id, token=token, erro=erro)
 
+@app.route('/passo_consultar_autorizacoes_daf', methods=['POST'])
+def passo_consultar_autorizacoes_daf():
+    token = request.values.get('token')
+    pedido = {"texto": "", "tipo": "texto"}
+    resposta = {"texto": "", "tipo": "texto"}
+    res_id = 0
+    erro = False
+    ini = 1
+    try:
+        daf = Daf.query.order_by(desc(Daf.data_insercao)).first()
+        fim = daf.num_dfe
+        msg = paf.consultarAutorizacoes(ini,fim)
+        res_daf = paf.enviar_mensagem(msg)
+        res_daf_json = json.loads(res_daf)
+        resultado = get_res_daf(res_daf_json["res"])
+        res_id = res_daf_json["res"]
+        if res_id == 0:
+            daf = atualizacao_daf(daf, False, False, None, None, res_daf_json)
+        resposta = {"texto": res_daf, "tipo": "json"}
+        pedido = {"texto": msg, "tipo": "json"}
+    except BaseException as e:
+        resultado = "Ocorreu um erro..."
+        erro = True
+        resposta["texto"] = "Erro: " + str(e.args)
 
-@app.route('/passo_consutlar_daf_sef', methods=['POST'])
-def passo_consutlar_daf_sef():
+    return jsonify(pedido=pedido, resposta=resposta, resultado=resultado, res_id=res_id, token=token, erro=erro)
+
+@app.route('/passo_consultar_daf_sef', methods=['POST'])
+def passo_consultar_daf_sef():
     token = request.values.get('token')
     pedido = {"texto": "", "tipo": "texto"}
     resposta = {"texto": "", "tipo": "texto"}
@@ -130,6 +156,8 @@ def passo_consutlar_daf_sef():
 
         res_sef = {"ultimaVersaoSB": 0
             , "dataRegistro": ""
+            , "modeloDaf": ""
+            , "cnpjFabricante": ""
             , "cnpjContribuinte": ""
             , "cnpjResponsavel": ""
             , "idCSRT": 0
@@ -142,12 +170,16 @@ def passo_consutlar_daf_sef():
                 x_situacao = x_situacao.text
                 ultima_versao_sb = res_sef_xml.find('.//ultimaVersaoSB').text
                 data_registro = res_sef_xml.find('.//dataRegistro').text
+                modelo_daf = res_sef_xml.find('.//modeloDaf').text
+                cnpj_fabricante = res_sef_xml.find('.//cnpjFabricante').text
                 cnpj_contribuinte = res_sef_xml.find('.//cnpjContribuinte').text
                 cnpj_responsavel = res_sef_xml.find('.//cnpjResponsavel').text
                 id_csrt = int(res_sef_xml.find('.//idCSRT').text)
 
                 res_sef = {"ultimaVersaoSB": int(ultima_versao_sb)
                     , "dataRegistro": data_registro
+                    , "modeloDaf": modelo_daf
+                    , "cnpjFabricante": cnpj_fabricante
                     , "cnpjContribuinte": cnpj_contribuinte
                     , "cnpjResponsavel": cnpj_responsavel
                     , "idCSRT": id_csrt
