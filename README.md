@@ -151,10 +151,10 @@ docker-compose up -d sef
 
 ### Executando o PAF localmente no computador hospedeiro
 
-Criar um ambiente virtual Python3 e instalar as dependências do PAF
+Criar um ambiente virtual Python3.9 e instalar as dependências do PAF
 ```bash
 cd paf/app
-python3 -m venv venv
+python3.9 -m venv venv
 source venv/bin/activate
 pip3 install -r requirements.txt
 deactivate
@@ -164,7 +164,7 @@ Executar o PAF
 ```bash
 sudo -s
 source venv/bin/activate
-python3 app.py
+python3.9 app.py
 ```
 
 :clap: Pronto! A composição e o PAF estão prontos para serem utilizados
