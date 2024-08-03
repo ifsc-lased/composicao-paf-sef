@@ -10,26 +10,26 @@
 >
 >A SEF e o IFSC eximem-se de qualquer responsabilidade, direta ou indireta, por perdas ou danos, comprovadamente ou alegadamente, causados pelos artefatos disponibilizados nesta POC. Caso deseje usar os componentes e softwares aqui disponibilizados, você estará fazendo isto exclusivamente por sua conta e risco.
 
-# Composição Docker com PAF, SEF e SEFAZ Autorizadora
+# Composição Docker com PAF, SEF e SEFAZ Autorizadora <!-- omit in toc -->
 
 **Sumário**
 
-- [Composição Docker com PAF, SEF e SEFAZ Autorizadora](#composição-docker-com-paf-sef-e-sefaz-autorizadora)
-  - [Introdução](#introdução)
-  - [Composição Docker com PAF, SEF e SEFAZ Autorizadora](#composição-docker-com-paf-sef-e-sefaz-autorizadora-1)
-    - [Casos de uso implementados pelo PAF](#casos-de-uso-implementados-pelo-paf)
-    - [Requisitos para usar essa composição Docker](#requisitos-para-usar-essa-composição-docker)
-  - [Como executar em um computador hospedeiro (Docker Host) executando o sistema operacional Linux](#como-executar-em-um-computador-hospedeiro-docker-host-executando-o-sistema-operacional-linux)
-  - [Como executar em um computador hospedeiro (Docker Host) executando o sistema operacional macOS](#como-executar-em-um-computador-hospedeiro-docker-host-executando-o-sistema-operacional-macos)
-    - [Executando o PAF localmente no computador hospedeiro](#executando-o-paf-localmente-no-computador-hospedeiro)
-  - [Personalizações opcionais da composição](#personalizações-opcionais-da-composição)
-    - [Personalizações para desenvolvedores de PAF](#personalizações-para-desenvolvedores-de-paf)
-    - [Personalizações para fabricantes de DAF](#personalizações-para-fabricantes-de-daf)
-  - [Limitações conhecidas](#limitações-conhecidas)
-    - [Casos de uso não implementados](#casos-de-uso-não-implementados)
-    - [Valor do *timeout* da camada ARQ do protocolo de comunicação do DAF](#valor-do-timeout-da-camada-arq-do-protocolo-de-comunicação-do-daf)
-    - [Aplicação PAF](#aplicação-paf)
-  - [Dependências e bibliotecas de terceiros](#dependências-e-bibliotecas-de-terceiros)
+- [Introdução](#introdução)
+- [Composição Docker com PAF, SEF e SEFAZ Autorizadora](#composição-docker-com-paf-sef-e-sefaz-autorizadora-1)
+  - [Casos de uso implementados pelo PAF](#casos-de-uso-implementados-pelo-paf)
+  - [Requisitos para usar essa composição Docker](#requisitos-para-usar-essa-composição-docker)
+- [Como executar em um computador hospedeiro (Docker Host) executando o sistema operacional Linux](#como-executar-em-um-computador-hospedeiro-docker-host-executando-o-sistema-operacional-linux)
+- [Como executar em um computador hospedeiro (Docker Host) executando o sistema operacional macOS](#como-executar-em-um-computador-hospedeiro-docker-host-executando-o-sistema-operacional-macos)
+  - [Executando o PAF localmente no computador hospedeiro](#executando-o-paf-localmente-no-computador-hospedeiro)
+- [Personalizações opcionais da composição](#personalizações-opcionais-da-composição)
+  - [Personalizações para desenvolvedores de PAF](#personalizações-para-desenvolvedores-de-paf)
+  - [Personalizações para fabricantes de DAF](#personalizações-para-fabricantes-de-daf)
+- [Limitações conhecidas](#limitações-conhecidas)
+  - [Casos de uso não implementados](#casos-de-uso-não-implementados)
+  - [Valor do *timeout* da camada ARQ do protocolo de comunicação do DAF](#valor-do-timeout-da-camada-arq-do-protocolo-de-comunicação-do-daf)
+  - [Aplicação PAF](#aplicação-paf)
+- [Dependências e bibliotecas de terceiros](#dependências-e-bibliotecas-de-terceiros)
+
 ## Introdução
 
 Na [Especificação 3.0.0 do Dispositivo Autorizador Fiscal (DAF)](https://www.sef.sc.gov.br/arquivos_portal/servicos/159/Especificacao_de_Requisitos_do_DAF___versao_3.0.0.pdf) são apresentados todos os casos de uso e protocolos que devem ser implementados pelo DAF para que o mesmo possa ser comandado pelo Programa Aplicativo Fiscal (PAF), bem como são listados todos os Serviços *Web* (*Web Services*) da Secretaria de Estado da Fazenda (SEF) que poderão ser consumidos pelo PAF para emissão de Nota Fiscal de Consumidor Eletrônica (NFC-e) em Santa Catarina no contexto do uso do Dispositivo Autorizador Fiscal (DAF), o que inclui o registro do DAF a validação de autorizações emitidas pelo mesmo. 
